@@ -1,6 +1,7 @@
 package com.example.oasis.braintrainer;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     int locationOfCorrectAnswer;
     TextView resultTextView;
     TextView scoreTextView;
+    TextView timerTextView;
     TextView sumText;
     Button button0;
     Button button1;
@@ -49,12 +51,31 @@ public class MainActivity extends AppCompatActivity {
         sumText = findViewById(R.id.SumText);
         resultTextView = findViewById(R.id.resultTextView);
         scoreTextView = findViewById(R.id.marksText);
+        timerTextView = findViewById(R.id.timerText);
 
 
         newQuestion();
 
+        // start countdown timer
+
+        new CountDownTimer(30100, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                // reset the text to 30s
+                timerTextView.setText("30s");
+                // set the result text to done/finish the session
+                resultTextView.setText("Done!!!!");
+            }
+        }.start();
+
 
     }
+
 
     public void startGame(View view) {
         // method to launch the game
